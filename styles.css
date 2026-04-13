@@ -1,0 +1,183 @@
+:root {
+  --bg: #ffffff;
+  --text: #101010;
+  --muted: #5a5a5a;
+  --line: #e9e9e9;
+  --accent: #e76b6b;
+  --card: #fafafa;
+  --shadow: 0 18px 50px rgba(0,0,0,0.06);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+.container {
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+}
+.site-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  z-index: 20;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+}
+.brand { font-weight: 800; letter-spacing: -0.04em; }
+nav { display: flex; gap: 24px; flex-wrap: wrap; }
+nav a, .contact-links a {
+  color: var(--text);
+  text-decoration: none;
+}
+.hero {
+  display: grid;
+  grid-template-columns: 1.25fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  padding: 72px 0 48px;
+}
+.eyebrow, .section-label {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  margin: 14px 0 18px;
+}
+h2 {
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin: 12px 0 20px;
+}
+.summary, p {
+  color: var(--muted);
+  font-size: 1.04rem;
+  line-height: 1.75;
+}
+.hero-photo-wrap {
+  display: flex;
+  justify-content: center;
+}
+.hero-photo {
+  width: min(100%, 390px);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 32px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+}
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 28px 0;
+}
+.stat {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 18px;
+}
+.stat strong { display: block; font-size: 1.2rem; margin-bottom: 6px; }
+.stat span { color: var(--muted); font-size: 0.9rem; }
+.actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn {
+  padding: 14px 22px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid var(--text);
+}
+.btn-primary { background: var(--text); color: white; border-color: var(--text); }
+.btn-secondary { background: white; color: var(--text); }
+.section { padding: 44px 0; }
+.two-col {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 36px;
+  border-top: 1px solid var(--line);
+}
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.badges span, .project-tags span {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: white;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.project-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.projects-grid {
+  display: grid;
+  gap: 22px;
+}
+.project-card {
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--card);
+  padding: 28px;
+}
+.project-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+}
+.project-images.three-up {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.project-images img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 18px;
+}
+.contact-card {
+  border-top: 1px solid var(--line);
+  padding-bottom: 80px;
+}
+.contact-links { display: flex; gap: 18px; flex-wrap: wrap; }
+@media (max-width: 920px) {
+  .hero, .two-col, .project-feature {
+    grid-template-columns: 1fr;
+  }
+  .quick-stats {
+    grid-template-columns: 1fr;
+  }
+  .project-images.three-up {
+    grid-template-columns: 1fr;
+  }
+  .project-images img { height: 220px; }
+}
+@media (max-width: 640px) {
+  .container { width: min(100% - 24px, 1120px); }
+  .nav { gap: 14px; }
+  nav { gap: 14px; font-size: 0.92rem; }
+  .hero { padding-top: 38px; }
+  .actions { flex-direction: column; }
+  .btn { width: 100%; text-align: center; }
+}
