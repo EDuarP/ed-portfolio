@@ -14,31 +14,37 @@
     <header class="site-header">
       <div class="container nav">
         <div class="brand">Eduardo Duarte</div>
-        <nav>
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
-        </nav>
+        <div class="nav-right">
+          <nav>
+            <a href="#about" data-i18n="nav.about">About</a>
+            <a href="#skills" data-i18n="nav.skills">Skills</a>
+            <a href="#projects" data-i18n="nav.projects">Projects</a>
+            <a href="#contact" data-i18n="nav.contact">Contact</a>
+          </nav>
+          <div class="lang-switch">
+            <button class="lang-option active" data-lang="es"><span>🇪🇸</span><strong>ES</strong></button>
+            <button class="lang-option" data-lang="en"><span>🇺🇸</span><strong>EN</strong></button>
+          </div>
+        </div>
       </div>
     </header>
 
     <main>
       <section class="hero container">
         <div class="hero-copy">
-          <p class="eyebrow">Machine Learning Engineer · RF Systems · Data Science</p>
-          <h1>Building intelligent systems that connect hardware, AI, and software.</h1>
-          <p class="summary">
+          <p class="eyebrow" data-i18n="hero.eyebrow">Machine Learning Engineer · RF Systems · Data Science</p>
+          <h1 data-i18n="hero.title">Building intelligent systems that connect hardware, AI, and software.</h1>
+          <p class="summary" data-i18n="hero.summary">
             Mechatronics engineer focused on machine learning, RF/SDR systems, backend development, and real-world automation. I design end-to-end solutions, from signal acquisition and data pipelines to APIs, dashboards, and deployed systems.
           </p>
           <div class="quick-stats">
-            <div class="stat"><strong>2+</strong><span>Years of experience</span></div>
-            <div class="stat"><strong>RF/SDR</strong><span>Signal processing & detection</span></div>
-            <div class="stat"><strong>Python</strong><span>End-to-end development</span></div>
+            <div class="stat"><strong>2+</strong><span data-i18n="hero.stat1.label">Years of experience</span></div>
+            <div class="stat"><strong>RF/SDR</strong><span data-i18n="hero.stat2.label">Signal processing & detection</span></div>
+            <div class="stat"><strong>Python</strong><span data-i18n="hero.stat3.label">End-to-end development</span></div>
           </div>
           <div class="actions">
-            <a class="btn btn-primary" href="./Eduardo_Duarte_CV.pdf" download>Download CV</a>
-            <a class="btn btn-secondary" href="#projects">View Projects</a>
+            <a class="btn btn-primary" href="./Eduardo_Duarte_CV.pdf" download data-i18n="hero.cta1">Download CV</a>
+            <a class="btn btn-secondary" href="#projects" data-i18n="hero.cta2">View Projects</a>
           </div>
         </div>
         <div class="hero-photo-wrap">
@@ -48,22 +54,22 @@
 
       <section id="about" class="section container two-col">
         <div>
-          <p class="section-label">About</p>
-          <h2>A practical engineer with a strong focus on applied AI and technical execution.</h2>
+          <p class="section-label" data-i18n="about.label">About</p>
+          <h2 data-i18n="about.title">A practical engineer with a strong focus on applied AI and technical execution.</h2>
         </div>
         <div>
-          <p>
+          <p data-i18n="about.text1">
             My work sits at the intersection of machine learning, RF signal processing, data systems, and software engineering. I enjoy solving real-world problems with solid technical foundations, clean implementation, and systems that can scale from prototype to production.
           </p>
-          <p>
+          <p data-i18n="about.text2">
             Recently, I have been focused on distributed RF-based drone detection, data acquisition pipelines, FastAPI backends, React frontends, MQTT coordination, and model experimentation in Azure.
           </p>
         </div>
       </section>
 
       <section id="skills" class="section container">
-        <p class="section-label">Skills</p>
-        <h2>Core stack and technical strengths</h2>
+        <p class="section-label" data-i18n="skills.label">Skills</p>
+        <h2 data-i18n="skills.title">Core stack and technical strengths</h2>
         <div class="skills-grid">
           <div class="skill-card"><img src="https://cdn.simpleicons.org/python/3776AB" alt="Python"><span>Python</span></div>
           <div class="skill-card"><img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="SQL"><span>SQL</span></div>
@@ -79,8 +85,8 @@
       </section>
 
       <section id="projects" class="section container">
-        <p class="section-label">Featured Projects</p>
-        <h2>Selected work</h2>
+        <p class="section-label" data-i18n="projects.label">Featured Projects</p>
+        <h2 data-i18n="projects.title">Selected work</h2>
         <div class="projects-grid">
           <article class="project-card project-feature">
             <div class="project-images three-up">
@@ -102,8 +108,8 @@
               <img src="./assets/projects/cerdo3.jpg" alt="Pig System 3">
             </div>
             <div class="project-content">
-              <h3>Pig Weighing Management System</h3>
-              <p>Industrial data capture and reporting system for pork processing operations, integrating serial communication, automated reports, traceability, and operational dashboards.</p>
+              <h3 data-i18n="projects.pig.title">Pig Weighing Management System</h3>
+              <p data-i18n="projects.pig.text">Industrial data capture and reporting system for pork processing operations, integrating serial communication, automated reports, traceability, and operational dashboards.</p>
               <div class="project-tags"><span>Python</span><span>Pandas</span><span>Power BI</span><span>Automation</span></div>
             </div>
           </article>
@@ -115,8 +121,8 @@
               <img src="./assets/projects/ciencia3.png" alt="Transport Data 3">
             </div>
             <div class="project-content">
-              <h3>Public Transportation Data Science</h3>
-              <p>Applied data science and machine learning to model and analyze public transportation routes in Bucaramanga, supported by dashboards and operational insights.</p>
+              <h3 data-i18n="projects.transport.title">Public Transportation Data Science</h3>
+              <p data-i18n="projects.transport.text">Applied data science and machine learning to model and analyze public transportation routes in Bucaramanga, supported by dashboards and operational insights.</p>
               <div class="project-tags"><span>Python</span><span>Power BI</span><span>Machine Learning</span></div>
             </div>
           </article>
@@ -124,8 +130,8 @@
       </section>
 
       <section id="contact" class="section container contact-card">
-        <p class="section-label">Contact</p>
-        <h2>Let's build something useful.</h2>
+        <p class="section-label" data-i18n="contact.label">Contact</p>
+        <h2 data-i18n="contact.title">Let's build something useful.</h2>
         <div class="contact-links">
           <a href="mailto:eduardo.jose881@gmail.com">eduardo.jose881@gmail.com</a>
           <a href="https://github.com/EDuarP" target="_blank">GitHub</a>

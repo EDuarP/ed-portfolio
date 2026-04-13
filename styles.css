@@ -14,8 +14,12 @@ body { margin: 0; font-family: Inter, sans-serif; background: var(--bg); color: 
 .site-header { position: sticky; top: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); z-index: 20; }
 .nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
 .brand { font-weight: 800; letter-spacing: -0.04em; }
+.nav-right { display: flex; align-items: center; gap: 18px; }
 nav { display: flex; gap: 24px; flex-wrap: wrap; }
 nav a, .contact-links a { color: var(--text); text-decoration: none; }
+.lang-switch { display: inline-flex; gap: 6px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: white; }
+.lang-option { display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; border-radius: 999px; padding: 8px 12px; cursor: pointer; font-weight: 700; color: var(--text); }
+.lang-option.active { background: var(--text); color: white; }
 .hero { display: grid; grid-template-columns: 1.25fr 0.9fr; gap: 48px; align-items: stretch; padding: 72px 0 48px; }
 .eyebrow, .section-label { color: var(--accent); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.78rem; font-weight: 700; }
 h1 { font-size: clamp(2.2rem, 4.3vw, 4rem); line-height: 1.02; letter-spacing: -0.05em; margin: 14px 0 18px; }
@@ -99,8 +103,11 @@ h2 { font-size: clamp(1.7rem, 3vw, 2.7rem); line-height: 1.05; letter-spacing: -
 }
 @media (max-width: 640px) {
   .container { width: min(100% - 24px, 1120px); }
-  .nav { gap: 14px; }
+  .nav { gap: 14px; flex-direction: column; align-items: flex-start; }
+  .nav-right { width: 100%; flex-direction: column; align-items: flex-start; }
   nav { gap: 14px; font-size: 0.92rem; }
+  .lang-switch { width: 100%; justify-content: space-between; }
+  .lang-option { flex: 1; justify-content: center; }
   .hero { padding-top: 38px; }
   .actions { flex-direction: column; }
   .btn { width: 100%; text-align: center; }
