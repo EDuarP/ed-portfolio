@@ -44,9 +44,52 @@ h2 { font-size: clamp(1.7rem, 3vw, 2.7rem); line-height: 1.05; letter-spacing: -
 .project-card { border: 1px solid var(--line); border-radius: 28px; background: var(--card); padding: 28px; }
 .project-feature { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
 .project-images.three-up { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.project-images img { width: 100%; height: 260px; object-fit: cover; border-radius: 18px; }
+.project-images img { width: 100%; height: 260px; object-fit: cover; border-radius: 18px; cursor: zoom-in; }
 .contact-card { border-top: 1px solid var(--line); padding-bottom: 80px; }
 .contact-links { display: flex; gap: 18px; flex-wrap: wrap; }
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 100;
+}
+.lightbox.open { display: flex; }
+.lightbox img {
+  max-width: min(1100px, 90vw);
+  max-height: 82vh;
+  border-radius: 18px;
+  object-fit: contain;
+}
+.lightbox-close,
+.lightbox-nav {
+  position: absolute;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.14);
+  color: white;
+  cursor: pointer;
+}
+.lightbox-close {
+  top: 20px;
+  right: 20px;
+  width: 46px;
+  height: 46px;
+  font-size: 2rem;
+}
+.lightbox-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  font-size: 2rem;
+}
+.lightbox-nav.prev { left: 20px; }
+.lightbox-nav.next { right: 20px; }
+
 @media (max-width: 920px) {
   .hero, .two-col, .project-feature { grid-template-columns: 1fr; }
   .quick-stats, .skills-grid { grid-template-columns: 1fr 1fr; }
