@@ -24,8 +24,6 @@ const translations = {
     'projects.pig.text': 'Industrial data capture and reporting system for pork processing operations, integrating serial communication, automated reports, traceability, and operational dashboards.',
     'projects.transport.title': 'Public Transportation Data Science',
     'projects.transport.text': 'Applied data science and machine learning to model and analyze public transportation routes in Bucaramanga, supported by dashboards and operational insights.',
-    'projects.weather.title': 'IoT Weather Station',
-    'projects.weather.text': 'Complete weather monitoring system with Arduino, SparkFun sensors, MQTT communication, FastAPI backend, SQLite storage, and a real-time dashboard for environmental metrics and operational status.',
     'contact.label': 'Contact',
     'contact.title': "Let's build something useful."
   },
@@ -54,8 +52,6 @@ const translations = {
     'projects.pig.text': 'Sistema industrial de captura y reporte de datos para operaciones de procesamiento porcino, integrando comunicación serial, reportes automáticos, trazabilidad y tableros operativos.',
     'projects.transport.title': 'Ciencia de Datos para Transporte Público',
     'projects.transport.text': 'Aplicación de ciencia de datos y machine learning para modelar y analizar rutas de transporte público en Bucaramanga, apoyado por dashboards e indicadores operativos.',
-    'projects.weather.title': 'Estación Meteorológica IoT',
-    'projects.weather.text': 'Sistema completo de monitoreo meteorológico con Arduino, sensores SparkFun, comunicación MQTT, backend en FastAPI, almacenamiento en SQLite y dashboard en tiempo real para variables ambientales y estado del sistema.',
     'contact.label': 'Contacto',
     'contact.title': 'Construyamos algo útil.'
   }
