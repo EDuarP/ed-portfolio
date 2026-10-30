@@ -739,6 +739,170 @@
   });
 
   /* ------------------------------------------------------------------
+     Background: dot grid + neural network that wires itself up on scroll
+     ------------------------------------------------------------------ */
+  (function neuralBackground() {
+    var canvas = document.querySelector('.bg-net');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var BLUE = '91, 134, 240';
+    var GRID = 24;
+    var w = 0, h = 0, dpr = 1, fieldH = 0, nodes = [], pulses = [], grid = null;
+    var running = false, last = 0;
+
+    function scrollProgress() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      return max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    }
+
+    function makeGrid() {
+      // One tile of the dot grid, repeated as a pattern.
+      var tile = document.createElement('canvas');
+      tile.width = tile.height = Math.round(GRID * dpr);
+      var t = tile.getContext('2d');
+      t.fillStyle = 'rgba(' + BLUE + ', 0.24)';
+      t.beginPath();
+      t.arc(tile.width / 2, tile.height / 2, 1.05 * dpr, 0, Math.PI * 2);
+      t.fill();
+      grid = ctx.createPattern(tile, 'repeat');
+    }
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      fieldH = h * 1.6;
+      var count = Math.round(Math.min(90, Math.max(28, (w * fieldH) / 26000)));
+      nodes = [];
+      for (var i = 0; i < count; i++) {
+        nodes.push({
+          x: Math.random() * w,
+          y: Math.random() * fieldH,
+          vx: (Math.random() - 0.5) * 0.12,
+          vy: (Math.random() - 0.5) * 0.12,
+          r: 1.1 + Math.random() * 1.3
+        });
+      }
+      pulses = [];
+      makeGrid();
+    }
+
+    function screenY(n, offset) {
+      var y = (n.y - offset) % fieldH;
+      if (y < 0) y += fieldH;
+      return y - (fieldH - h) / 2;
+    }
+
+    function draw(dt) {
+      var p = scrollProgress();
+      var offset = window.scrollY * 0.22; // network drifts slower than the page
+      var linkDist = 70 + 110 * p;       // the further down, the more it connects
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Dot grid with a gentle parallax
+      ctx.save();
+      ctx.translate(0, -((window.scrollY * 0.12 * dpr) % (GRID * dpr)));
+      ctx.fillStyle = grid;
+      ctx.fillRect(0, 0, canvas.width, canvas.height + GRID * dpr);
+      ctx.restore();
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var pts = [];
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        if (dt) {
+          n.x += n.vx * dt;
+          n.y += n.vy * dt;
+          if (n.x < 0 || n.x > w) n.vx *= -1;
+        }
+        pts.push({ x: n.x, y: screenY(n, offset), r: n.r });
+      }
+
+      // Links
+      ctx.lineWidth = 1;
+      var links = [];
+      for (var a = 0; a < pts.length; a++) {
+        for (var b = a + 1; b < pts.length; b++) {
+          var dx = pts[a].x - pts[b].x, dy = pts[a].y - pts[b].y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d < linkDist) {
+            var alpha = (1 - d / linkDist) * (0.24 + 0.26 * p);
+            ctx.strokeStyle = 'rgba(' + BLUE + ', ' + alpha.toFixed(3) + ')';
+            ctx.beginPath();
+            ctx.moveTo(pts[a].x, pts[a].y);
+            ctx.lineTo(pts[b].x, pts[b].y);
+            ctx.stroke();
+            links.push([a, b]);
+          }
+        }
+      }
+
+      // Nodes
+      for (var k = 0; k < pts.length; k++) {
+        ctx.fillStyle = 'rgba(' + BLUE + ', ' + (0.5 + 0.35 * p).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.arc(pts[k].x, pts[k].y, pts[k].r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Signals travelling along links, like synapses firing
+      if (dt) {
+        if (links.length && pulses.length < 2 + Math.round(4 * p) && Math.random() < 0.03) {
+          var l = links[Math.floor(Math.random() * links.length)];
+          pulses.push({ a: nodes[l[0]], b: nodes[l[1]], t: 0 });
+        }
+        for (var q = pulses.length - 1; q >= 0; q--) {
+          var s = pulses[q];
+          s.t += 0.012 * dt;
+          if (s.t >= 1) { pulses.splice(q, 1); continue; }
+          var ay = screenY(s.a, offset), by = screenY(s.b, offset);
+          if (Math.abs(ay - by) > linkDist * 1.5) { pulses.splice(q, 1); continue; }
+          var px = s.a.x + (s.b.x - s.a.x) * s.t, py = ay + (by - ay) * s.t;
+          ctx.fillStyle = 'rgba(' + BLUE + ', 0.9)';
+          ctx.beginPath();
+          ctx.arc(px, py, 1.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    function frame(now) {
+      if (!running) return;
+      var dt = last ? Math.min(3, (now - last) / 16.7) : 1;
+      last = now;
+      draw(dt);
+      window.requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (running || reduce.matches || document.hidden) return;
+      running = true;
+      last = 0;
+      window.requestAnimationFrame(frame);
+    }
+    function stop() { running = false; }
+
+    resize();
+    draw(0);
+    start();
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(function () { resize(); draw(0); }, 150);
+    });
+    // With reduced motion the network only changes when the visitor scrolls.
+    window.addEventListener('scroll', function () { if (!running) draw(0); }, { passive: true });
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+    var onReduce = function () { reduce.matches ? stop() : start(); draw(0); };
+    if (reduce.addEventListener) reduce.addEventListener('change', onReduce);
+  })();
+
+  /* ------------------------------------------------------------------
      Boot
      ------------------------------------------------------------------ */
   applyLanguage(lang, false);
