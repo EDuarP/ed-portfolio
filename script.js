@@ -749,6 +749,16 @@
     var BLUE = '91, 134, 240';
     var GRID = 24;
     var w = 0, h = 0, dpr = 1, fieldH = 0, nodes = [], pulses = [], grid = null;
+    // The dot grid is drawn on its own layer and masked by soft drifting "clouds",
+    // so it shows strongly in some areas and fades out in others.
+    var gridLayer = document.createElement('canvas'), gctx = gridLayer.getContext('2d');
+    var maskLayer = document.createElement('canvas'), mctx = maskLayer.getContext('2d');
+    var clouds = [
+      { x: 0.18, y: 0.15, r: 0.55, sx: 0.00011, sy: 0.00007, ph: 0.0 },
+      { x: 0.82, y: 0.45, r: 0.5,  sx: 0.00008, sy: 0.00012, ph: 1.7 },
+      { x: 0.35, y: 0.85, r: 0.6,  sx: 0.00013, sy: 0.00009, ph: 3.1 },
+      { x: 0.7,  y: 1.25, r: 0.45, sx: 0.0001,  sy: 0.00006, ph: 4.4 }
+    ];
     var running = false, last = 0;
 
     function scrollProgress() {
@@ -761,11 +771,11 @@
       var tile = document.createElement('canvas');
       tile.width = tile.height = Math.round(GRID * dpr);
       var t = tile.getContext('2d');
-      t.fillStyle = 'rgba(' + BLUE + ', 0.24)';
+      t.fillStyle = 'rgba(' + BLUE + ', 0.55)';
       t.beginPath();
       t.arc(tile.width / 2, tile.height / 2, 1.05 * dpr, 0, Math.PI * 2);
       t.fill();
-      grid = ctx.createPattern(tile, 'repeat');
+      grid = gctx.createPattern(tile, 'repeat');
     }
 
     function resize() {
@@ -774,6 +784,8 @@
       h = window.innerHeight;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
+      gridLayer.width = maskLayer.width = canvas.width;
+      gridLayer.height = maskLayer.height = canvas.height;
       fieldH = h * 1.6;
       var count = Math.round(Math.min(90, Math.max(28, (w * fieldH) / 26000)));
       nodes = [];
@@ -803,12 +815,35 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Dot grid with a gentle parallax
-      ctx.save();
-      ctx.translate(0, -((window.scrollY * 0.12 * dpr) % (GRID * dpr)));
-      ctx.fillStyle = grid;
-      ctx.fillRect(0, 0, canvas.width, canvas.height + GRID * dpr);
-      ctx.restore();
+      // Dot grid with a gentle parallax, faded in and out by the cloud mask
+      var cw = canvas.width, ch = canvas.height, t = performance.now();
+      gctx.globalCompositeOperation = 'source-over';
+      gctx.clearRect(0, 0, cw, ch);
+      gctx.save();
+      gctx.translate(0, -((window.scrollY * 0.12 * dpr) % (GRID * dpr)));
+      gctx.fillStyle = grid;
+      gctx.fillRect(0, 0, cw, ch + GRID * dpr);
+      gctx.restore();
+
+      mctx.clearRect(0, 0, cw, ch);
+      mctx.fillStyle = 'rgba(255, 255, 255, 0.05)'; // a faint trace everywhere
+      mctx.fillRect(0, 0, cw, ch);
+      var span = Math.max(cw, ch), loop = ch * 1.6;
+      for (var c = 0; c < clouds.length; c++) {
+        var cl = clouds[c];
+        var cx = (cl.x + 0.12 * Math.sin(t * cl.sx + cl.ph)) * cw;
+        var cy = ((cl.y * ch + 0.08 * ch * Math.cos(t * cl.sy + cl.ph) - window.scrollY * 0.35 * dpr) % loop + loop) % loop - ch * 0.3;
+        var rad = cl.r * span;
+        var g = mctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+        g.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        g.addColorStop(0.45, 'rgba(255, 255, 255, 0.45)');
+        g.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        mctx.fillStyle = g;
+        mctx.fillRect(0, 0, cw, ch);
+      }
+      gctx.globalCompositeOperation = 'destination-in';
+      gctx.drawImage(maskLayer, 0, 0);
+      ctx.drawImage(gridLayer, 0, 0);
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var pts = [];
