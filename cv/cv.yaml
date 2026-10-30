@@ -1,0 +1,152 @@
+# Datos de la hoja de vida. Edita este archivo y ejecuta:  python cv/build.py
+# Formato de texto: **negrita**, *cursiva*, [texto](https://url) para enlaces.
+# Las secciones salen en el orden en que aparecen aquí.
+
+output: Eduardo_Duarte_CV.pdf        # se escribe en la raíz del repo (lo enlaza el portafolio)
+
+personal:
+  first_name: Eduardo José
+  last_name: Duarte Peña
+  phone: "+57 315 474 5396"
+  email: eduardo.jose881@gmail.com
+  homepage: https://eduarp.github.io/ed-portfolio/
+  linkedin: eduardo-duarte-penna
+  github: EDuarP
+  title: AI Systems Engineer · Machine Learning Engineer · Full-Stack & IoT Developer
+
+sections:
+  - title: Professional Summary
+    type: paragraph
+    text: >-
+      AI Systems Engineer with a Mechatronics background who designs and ships **end-to-end ML and AI systems**
+      —from sensor and signal data acquisition and feature engineering to model training, optimization, and
+      production deployment on **Microsoft Azure, AWS**, and edge devices, including real-time inference pipelines and
+      applied AI for signal processing and geospatial intelligence. As a freelancer, ships complete products for
+      clients—**IoT-connected machines, web platforms with payments, and mobile apps**—with Python, FastAPI, React, and Flutter.
+
+  - title: Education
+    type: entries
+    entries:
+      - org: Universidad Santo Tomás
+        location: Bucaramanga, Colombia
+        role: B.Sc. in Mechatronics Engineering
+        dates: 2019–2025
+      - org: Google – Coursera
+        role: Data Analytics Professional Certificate
+        dates: 2023
+
+  - title: Professional Experience
+    type: entries
+    entries:
+      - org: Space-Eyes
+        location: Medellín, Colombia
+        role: AI Systems Engineer
+        dates: Jun 2026 – Present
+        note: AI-driven Counter-UAS and geospatial intelligence for defense, security, and enterprise customers.
+      - role: Machine Learning Engineer
+        dates: Oct 2025 – Jun 2026
+        items:
+          - Trained and optimized **deep-learning models** on **Microsoft Azure** (Azure ML, AKS) and **AWS** (EC2, S3), enabling reproducible training workflows and scalable inference across cloud providers.
+          - Architected an **end-to-end ML pipeline** —data acquisition, feature engineering, model training, and edge deployment— for real-time signal classification on resource-constrained devices.
+          - Engineered an **ML-driven distributed detection & localization system** on edge hardware, integrating model inference with custom data-acquisition stacks.
+          - Defined the **mathematical foundations for ML-based geolocation algorithms**, producing internal reference documentation adopted as team standard.
+          - Deployed a **resilient distributed architecture** sustaining stable telemetry and data transmission over distances up to **5 km** for real-time model inputs.
+          - Built a **scalable FastAPI backend** exposing model predictions and data through REST APIs, and a **React frontend** for real-time visualization, system health, and geospatial inference output.
+          - Led the **transition from MVP to Tier-1 production architecture**, defining system tiers, eliminating bottlenecks, and improving scalability, modularity, and reliability of the ML platform.
+      - org: Freelance
+        location: Remote
+        role: Full-Stack & IoT Developer
+        dates: Apr 2026 – Present
+        items:
+          - "Built **Portal Madre Tierra** ([madretierragroup.co](https://madretierragroup.co)), a production platform for water vending machines: **ESP32** units report sales and telemetry to a **FastAPI** backend on **Vercel** with **Supabase**, and a **React** dashboard shows live sales, a machine map, alerts, and remote control."
+          - Integrated **Wompi** recurring payments for subscriptions and a public catalog with a quote builder, prerendered for **SEO**.
+          - "Shipped **Nest – Finanzas en Pareja** to [**Google Play**](https://play.google.com/store/apps/details?id=com.nestapp.nest_app): a **Flutter** app for couples' shared finances on **Supabase** (RLS, **Edge Functions**), with push notifications and **RevenueCat** subscriptions."
+      - org: ELVA AI
+        location: Remote
+        role: Machine Learning Engineer
+        dates: Aug 2025 – Sept 2025
+        items:
+          - Trained a **multi-class deep-learning classifier** (Wi-Fi, LTE, DVB-T) from raw input samples, optimized for resource-constrained edge devices.
+          - Automated **city-level model performance reports** including confusion matrices and interactive visualizations, eliminating hours of manual reporting.
+          - Hardened cloud deployment by implementing **Azure AD authentication on AKS**, with complementary ML workloads on **AWS** (S3 storage, IAM-based access control).
+          - Reduced cloud storage costs by **20%** through disk-tier optimization and lifecycle/retention policies across Azure and AWS.
+      - org: Tayronama SAS
+        location: Santa Marta, Colombia
+        role: Industrial Automation Developer (Freelance)
+        dates: Mar 2025 – Jul 2025
+        items:
+          - Developed a **Python data-acquisition application** for livestock traceability with real-time integration via serial communication.
+          - Engineered ETL workflows in Pandas and built **Power BI dashboards** surfacing operational KPIs to stakeholders.
+          - Automated client report delivery through the **WhatsApp Business API**, eliminating manual dispatch and improving communication SLAs.
+      - org: Merck Sharp & Dohme (MSD)
+        location: Bogotá, Colombia
+        role: Innovation & Technology Intern – Data Analytics
+        dates: Jul 2024 – Feb 2025
+        items:
+          - Saved over **30 hours per month** by re-engineering training processes through data-driven analysis.
+          - Built a **KPI monitoring system in Power BI** ensuring continuous performance visibility for leadership.
+          - Delivered automation solutions with **Power Apps and Power Automate**, increasing operational efficiency across multiple workflows.
+          - Processed large pharmaceutical datasets using **Python, SQL, and ML libraries** to support evidence-based decisions.
+      - org: Universidad Santo Tomás
+        location: Bucaramanga, Colombia
+        role: Data Scientist / Young Researcher
+        dates: Jun 2023 – Nov 2023
+        items:
+          - Built **ML models** predicting public-transportation routing patterns in Bucaramanga.
+          - Delivered an interactive **Power BI dashboard** surfacing urban mobility insights for civic stakeholders.
+          - "**Co-author**, *Advances in solutions on public transportation problems with AI* (peer-reviewed publication)."
+
+  - title: Technical Skills
+    type: items
+    entries:
+      - label: Machine Learning & AI
+        text: PyTorch, scikit-learn, Deep Learning, Model Training & Optimization, Feature Engineering, Signal Classification, RAG / LLM applications, MLOps
+      - label: Programming
+        text: Python, SQL, TypeScript / JavaScript, Dart, C/C++ (embedded)
+      - label: Web & Mobile
+        text: React, Vite, FastAPI, Flutter, Supabase (PostgreSQL, Auth, Edge Functions), REST APIs, payment integrations (Wompi, RevenueCat)
+      - label: Cloud & DevOps
+        text: "**Microsoft Azure** (Azure ML, AKS, Azure AD), **AWS** (EC2, S3, IAM), Vercel, Docker, CI/CD with GitHub, Edge Computing"
+      - label: Signal Processing, IoT & Distributed Systems
+        text: IQ processing, SDR (bladeRF), DSP, ESP32, Raspberry Pi, MQTT, real-time telemetry, edge-to-cloud pipelines
+      - label: Data, Tools & Methods
+        text: Pandas, NumPy, Power BI, Power Apps, Power Automate, Git / GitHub, Jira, Claude Code, CRISP-DM, Agile
+
+  - title: Awards
+    type: items
+    entries:
+      - label: "2023"
+        text: "**1st Place** – CienTIoN, Research & Innovation  ·  **3rd Place** – Huawei ICT Competition, Cloud Track"
+
+  - title: Certifications
+    type: items
+    entries:
+      - label: "2026"
+        text: Claude Code in Action – Anthropic
+      - label: "2025"
+        text: Deep Learning in Python – DataCamp
+      - label: "2025"
+        text: Project Management with Jira – LinkedIn Learning
+      - label: "2025"
+        text: Docker Essentials & DevOps Essentials – LinkedIn Learning
+      - label: "2024"
+        text: Process Improvement – Harvard Business School Online
+      - label: "2023"
+        text: Data Science & AI – Universidad de Antioquia (MinTIC)
+      - label: "2023"
+        text: Machine Learning Fundamentals with Python – DataCamp
+      - label: "2023"
+        text: Implementing AI Solutions in Business – DataCamp
+
+  - title: Languages
+    type: items
+    entries:
+      - label: Spanish
+        text: "Native  ·  **English**: B2 – Professional Working Proficiency"
+
+  - title: References
+    type: lines
+    lines:
+      - Sebastián Murcia – General Manager, Tayronama SAS – +57 321 6680277
+      - Iván Lis – Safety Data Manager, MSD – +57 310 7735259
+      - Carlos Pimentel – Research Professor, Universidad Santo Tomás – +57 316 2373049
