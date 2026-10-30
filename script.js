@@ -771,7 +771,7 @@
       var tile = document.createElement('canvas');
       tile.width = tile.height = Math.round(GRID * dpr);
       var t = tile.getContext('2d');
-      t.fillStyle = 'rgba(' + BLUE + ', 0.26)';
+      t.fillStyle = 'rgba(' + BLUE + ', 0.11)';
       t.beginPath();
       t.arc(tile.width / 2, tile.height / 2, 0.9 * dpr, 0, Math.PI * 2);
       t.fill();
@@ -865,7 +865,7 @@
           var dx = pts[a].x - pts[b].x, dy = pts[a].y - pts[b].y;
           var d = Math.sqrt(dx * dx + dy * dy);
           if (d < linkDist) {
-            var alpha = (1 - d / linkDist) * (0.16 + 0.18 * p);
+            var alpha = (1 - d / linkDist) * (0.12 + 0.14 * p);
             ctx.strokeStyle = 'rgba(' + BLUE + ', ' + alpha.toFixed(3) + ')';
             ctx.beginPath();
             ctx.moveTo(pts[a].x, pts[a].y);
@@ -878,7 +878,7 @@
 
       // Nodes
       for (var k = 0; k < pts.length; k++) {
-        ctx.fillStyle = 'rgba(' + BLUE + ', ' + (0.32 + 0.25 * p).toFixed(3) + ')';
+        ctx.fillStyle = 'rgba(' + BLUE + ', ' + (0.22 + 0.2 * p).toFixed(3) + ')';
         ctx.beginPath();
         ctx.arc(pts[k].x, pts[k].y, pts[k].r, 0, Math.PI * 2);
         ctx.fill();
@@ -897,7 +897,7 @@
           var ay = screenY(s.a, offset), by = screenY(s.b, offset);
           if (Math.abs(ay - by) > linkDist * 1.5) { pulses.splice(q, 1); continue; }
           var px = s.a.x + (s.b.x - s.a.x) * s.t, py = ay + (by - ay) * s.t;
-          ctx.fillStyle = 'rgba(' + BLUE + ', 0.7)';
+          ctx.fillStyle = 'rgba(' + BLUE + ', 0.55)';
           ctx.beginPath();
           ctx.arc(px, py, 1.8, 0, Math.PI * 2);
           ctx.fill();
