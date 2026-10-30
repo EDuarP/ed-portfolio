@@ -370,18 +370,20 @@ html.menu-open, html.lb-open { overflow: hidden; }
   margin-top: clamp(40px, 5vw, 72px);
 }
 .hero-copy {
-  grid-column: 1 / span 7;
-  align-self: start;
+  /* Uses all the room left of the photo: copy centred both ways in that space. */
+  grid-column: 1 / span 8;
+  align-self: center;
   display: grid;
-  gap: 32px;
-  justify-items: start;
+  gap: clamp(28px, 3vw, 44px);
+  justify-items: center;
+  text-align: center;
 }
 .statement {
-  max-width: 29ch;
-  font-size: clamp(22px, 2.2vw, 30px);
+  max-width: 21ch;
+  font-size: clamp(28px, 3.5vw, 52px);
   font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  line-height: 1.14;
+  letter-spacing: -0.015em;
   text-wrap: balance;
 }
 .statement .br:first-child { margin-right: 0.08em; }
@@ -390,6 +392,7 @@ html.menu-open, html.lb-open { overflow: hidden; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 16px 32px;
 }
 
@@ -1012,6 +1015,8 @@ textarea.input { resize: vertical; min-height: 112px; }
   .hero-meta p:nth-child(3) { margin-top: 4px; }
 
   .hero-intro { display: flex; flex-direction: column; gap: 32px; }
+  .hero-copy { justify-items: start; text-align: left; }
+  .hero-actions { justify-content: flex-start; }
   .hero-photo { order: -1; width: auto; }
   .hero-photo .frame { width: min(200px, 56%); }
   .frame-caption { margin-top: 12px; }
