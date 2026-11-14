@@ -284,6 +284,58 @@
             </div>
           </article>
 
+          <!-- Zenvik -->
+          <article class="tile feature feature-zv" id="zenvik" aria-labelledby="zv-title">
+            <div class="feature-text">
+              <h3 id="zv-title" class="feature-title" data-reveal data-i18n="zv.title">Zenvik — Trazabilidad porcina</h3>
+              <p class="feature-sub" data-reveal data-i18n="zv.kicker">Cada cerdo pesado y trazado, desde que llega a la planta hasta el despacho.</p>
+              <p class="status-tag" data-reveal><span class="br" aria-hidden="true">[</span> <span data-i18n="zv.tag">App de escritorio · funciona sin internet</span> <span class="br" aria-hidden="true">]</span></p>
+              <p class="body" data-reveal data-i18n="zv.body">Zenvik es una app de escritorio para plantas de beneficio porcino. Cada estación lee su báscula por puerto serie y registra el lote en pie, en caliente y en frío; un servidor local en una Raspberry Pi guarda todo y lo respalda en la nube. Si la red se cae, la estación sigue pesando y envía lo pendiente al reconectar. El administrador ve el rendimiento y la ganancia de cada lote, ajusta las fórmulas de cálculo y genera los informes en PDF. Es la segunda generación del sistema de pesaje que desarrollé para esta industria.</p>
+              <ul class="chips" data-reveal translate="no" aria-label="Tecnologías" data-i18n-attr="aria-label:ui.stack">
+                <li>Tauri</li><li>Rust</li><li>React</li><li>TypeScript</li><li>Python</li><li>MQTT</li><li>Raspberry Pi</li><li>SQLite</li><li>Supabase</li>
+              </ul>
+            </div>
+
+            <div class="feature-media" data-reveal>
+              <div class="hud zv-main">
+                <a class="zoom" href="./assets/projects/zenvik-dashboard.webp" data-gallery="zv" data-index="0">
+                  <img src="./assets/projects/zenvik-dashboard.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Panel de administración de Zenvik con los lotes procesados, el rendimiento y la ganancia de cada lote" data-i18n-attr="alt:alt.zv1" />
+                  <span class="sr-only" data-i18n="ui.enlarge">(ampliar imagen)</span>
+                </a>
+              </div>
+              <ol class="zv-flow">
+                <li>
+                  <div class="hud">
+                    <a class="zoom" href="./assets/projects/zenvik-pie.webp" data-gallery="zv" data-index="1">
+                      <img src="./assets/projects/thumbs/zenvik-pie.webp" width="800" height="500" loading="lazy" decoding="async" alt="Estación de pesaje en pie: la báscula marca 263,4 kg y los cerdos se pesan por grupos" data-i18n-attr="alt:alt.zv2" />
+                      <span class="sr-only" data-i18n="ui.enlarge">(ampliar imagen)</span>
+                    </a>
+                  </div>
+                  <p class="zv-step"><span class="num accent" aria-hidden="true">01</span> <span data-i18n="zv.step1">Pesaje en pie</span></p>
+                </li>
+                <li>
+                  <div class="hud">
+                    <a class="zoom" href="./assets/projects/zenvik-caliente.webp" data-gallery="zv" data-index="2">
+                      <img src="./assets/projects/thumbs/zenvik-caliente.webp" width="800" height="500" loading="lazy" decoding="async" alt="Estación de proceso caliente: el peso de la canal de cada cerdo se captura desde la báscula" data-i18n-attr="alt:alt.zv3" />
+                      <span class="sr-only" data-i18n="ui.enlarge">(ampliar imagen)</span>
+                    </a>
+                  </div>
+                  <p class="zv-step"><span class="num accent" aria-hidden="true">02</span> <span data-i18n="zv.step2">Proceso caliente</span></p>
+                </li>
+                <li>
+                  <div class="hud">
+                    <a class="zoom" href="./assets/projects/zenvik-informe.webp" data-gallery="zv" data-index="3">
+                      <img src="./assets/projects/thumbs/zenvik-informe.webp" width="800" height="500" loading="lazy" decoding="async" alt="Vista previa del informe de pesaje caliente, listo para imprimir o enviar" data-i18n-attr="alt:alt.zv4" />
+                      <span class="sr-only" data-i18n="ui.enlarge">(ampliar imagen)</span>
+                    </a>
+                  </div>
+                  <p class="zv-step"><span class="num accent" aria-hidden="true">03</span> <span data-i18n="zv.step3">Informe en PDF</span></p>
+                </li>
+              </ol>
+              <p class="zv-note" data-i18n="zv.note">Capturas con datos de demostración.</p>
+            </div>
+          </article>
+
           <!-- Other projects -->
           <div class="works" id="otros-proyectos">
             <article class="work" aria-labelledby="sickle-title">

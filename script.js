@@ -56,6 +56,15 @@
       'nest.tag': 'Publicada en Google Play · 50+ descargas',
       'nest.play': 'Ver en Google Play',
 
+      'zv.title': 'Zenvik — Trazabilidad porcina',
+      'zv.kicker': 'Cada cerdo pesado y trazado, desde que llega a la planta hasta el despacho.',
+      'zv.tag': 'App de escritorio · funciona sin internet',
+      'zv.body': 'Zenvik es una app de escritorio para plantas de beneficio porcino. Cada estación lee su báscula por puerto serie y registra el lote en pie, en caliente y en frío; un servidor local en una Raspberry Pi guarda todo y lo respalda en la nube. Si la red se cae, la estación sigue pesando y envía lo pendiente al reconectar. El administrador ve el rendimiento y la ganancia de cada lote, ajusta las fórmulas de cálculo y genera los informes en PDF. Es la segunda generación del sistema de pesaje que desarrollé para esta industria.',
+      'zv.step1': 'Pesaje en pie',
+      'zv.step2': 'Proceso caliente',
+      'zv.step3': 'Informe en PDF',
+      'zv.note': 'Capturas con datos de demostración.',
+
       'sickle.title': 'Chatbot médico de anemia falciforme',
       'sickle.text': 'Sistema RAG que responde con evidencia científica: recopila artículos de PubMed Central y hace búsquedas semánticas sobre ellos.',
       'weather.title': 'Estación meteorológica IoT',
@@ -173,6 +182,12 @@
       'alt.nest4': 'Metas de ahorro a largo plazo en Nest',
       'alt.nest5': 'Historial de movimientos en Nest',
       'alt.nest6': 'Actividad de la pareja en tiempo real en Nest',
+      'alt.zv1': 'Panel de administración de Zenvik con los lotes procesados, el rendimiento y la ganancia de cada lote',
+      'alt.zv2': 'Estación de pesaje en pie: la báscula marca 263,4 kg y los cerdos se pesan por grupos',
+      'alt.zv3': 'Estación de proceso caliente: el peso de la canal de cada cerdo se captura desde la báscula',
+      'alt.zv4': 'Vista previa del informe de pesaje caliente, listo para imprimir o enviar',
+      'alt.zv5': 'Editor de fórmulas de cálculo, que valida cada fórmula mientras se escribe',
+      'alt.zv6': 'Estación sin conexión: los registros se guardan en el equipo y se envían al reconectar',
       'alt.sickle1': 'Pantalla inicial del chatbot de anemia falciforme con preguntas sugeridas',
       'alt.sickle2': 'Respuesta del chatbot con referencias a artículos científicos',
       'alt.sickle3': 'Respuesta detallada del chatbot con la lista de fuentes de PubMed Central',
@@ -230,6 +245,15 @@
       'nest.body': 'Shared expenses, budgets, savings goals and debts in one place, with partner invites, recurring payments and reminders. I designed and built it end to end, from the backend to the Google Play release.',
       'nest.tag': 'Live on Google Play · 50+ downloads',
       'nest.play': 'Get it on Google Play',
+
+      'zv.title': 'Zenvik — Pork traceability',
+      'zv.kicker': 'Every pig weighed and traced, from arrival at the plant to dispatch.',
+      'zv.tag': 'Desktop app · works offline',
+      'zv.body': 'Zenvik is a desktop app for pork processing plants. Each station reads its scale over a serial port and records the batch at live, hot and cold weight; a local server on a Raspberry Pi stores everything and backs it up to the cloud. If the network drops, the station keeps weighing and sends what is pending once it reconnects. Admins see yield and profit per batch, edit the calculation formulas and generate the PDF reports. It is the second generation of the weighing system I built for this industry.',
+      'zv.step1': 'Live weight',
+      'zv.step2': 'Hot carcass',
+      'zv.step3': 'PDF report',
+      'zv.note': 'Screenshots show demo data.',
 
       'sickle.title': 'Sickle Cell Medical Chatbot',
       'sickle.text': 'A RAG system that answers with scientific evidence: it pulls PubMed Central papers and searches by meaning.',
@@ -347,6 +371,12 @@
       'alt.nest4': 'Long-term savings goals in Nest',
       'alt.nest5': 'Transaction history in Nest',
       'alt.nest6': 'Real-time partner activity in Nest',
+      'alt.zv1': 'Zenvik admin dashboard with processed batches, yield and profit per batch',
+      'alt.zv2': 'Live-weight station: the scale reads 263.4 kg and pigs are weighed in groups',
+      'alt.zv3': 'Hot-process station: each pig’s carcass weight is captured from the scale',
+      'alt.zv4': 'Preview of the hot-weight report, ready to print or send',
+      'alt.zv5': 'Calculation formula editor that validates each formula as you type',
+      'alt.zv6': 'Station offline: records are stored on the machine and sent once it reconnects',
       'alt.sickle1': 'Sickle cell chatbot start screen with suggested questions',
       'alt.sickle2': 'Chatbot answer citing scientific papers',
       'alt.sickle3': 'Detailed chatbot answer with a list of PubMed Central sources',
@@ -492,6 +522,9 @@
     ],
     nest: [1, 2, 3, 4, 5, 6].map(function (n) {
       return { src: P + 'nest' + n + '.webp', w: 720, h: 1280, alt: 'alt.nest' + n };
+    }),
+    zv: ['dashboard', 'pie', 'caliente', 'informe', 'formulas', 'offline'].map(function (name, i) {
+      return { src: P + 'zenvik-' + name + '.webp', w: 1600, h: 1000, alt: 'alt.zv' + (i + 1) };
     }),
     sickle: [
       { src: F + 'sickle_cell_2.webp', w: 1600, h: 761, alt: 'alt.sickle2' },
