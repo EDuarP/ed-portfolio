@@ -467,6 +467,8 @@ html.menu-open, html.lb-open { overflow: hidden; }
 .feature-mt .feature-media { grid-column: 6 / -1; }
 .feature-nest .feature-text { grid-column: 8 / -1; }
 .feature-nest .feature-media { grid-column: 1 / span 7; grid-row: 1; }
+.feature-zv .feature-text { grid-column: 1 / span 5; }
+.feature-zv .feature-media { grid-column: 6 / -1; }
 
 .feature-title,
 .work h3,
@@ -579,6 +581,27 @@ h3 { text-wrap: balance; }
   gap: clamp(10px, 1.4vw, 20px);
 }
 .phones .zoom { aspect-ratio: 9 / 16; }
+
+/* Zenvik: the admin dashboard over the three steps a batch goes through on the plant floor */
+.zv-main .zoom,
+.zv-flow .zoom { aspect-ratio: 16 / 10; }
+.zv-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 1.4vw, 20px);
+  margin-top: clamp(24px, 2.6vw, 36px);
+  list-style: none;
+}
+.zv-step,
+.zv-note {
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.zv-step { margin-top: 14px; }
+.zv-step .num { margin-right: 4px; }
+.zv-note { margin-top: 20px; }
 
 /* ---------- Projects: other work ---------- */
 .works {
@@ -968,6 +991,9 @@ textarea.input { resize: vertical; min-height: 112px; }
   .feature-nest .feature-media { grid-column: 1 / -1; grid-row: auto; }
   .feature-mt .feature-text,
   .feature-nest .feature-text { max-width: 68ch; }
+  .feature-zv .feature-text,
+  .feature-zv .feature-media { grid-column: 1 / -1; }
+  .feature-zv .feature-text { max-width: 68ch; }
 
   /* Meta becomes two columns (status spans); copy and photo keep the same two left edges. */
   .hero-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; }
@@ -1033,6 +1059,10 @@ textarea.input { resize: vertical; min-height: 112px; }
   /* Nest: two phones per row are legible; the third lives in the lightbox. */
   .phones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .phones > .hud:nth-child(3) { display: none; }
+
+  /* Zenvik: same rule, two steps per row; the report stays in the lightbox. */
+  .zv-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .zv-flow > li:nth-child(3) { display: none; }
 
   .about-grid {
     grid-template-columns: 1fr;
