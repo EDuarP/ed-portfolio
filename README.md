@@ -67,8 +67,8 @@ The site targets an audience in both English and Spanish and focuses on:
 ## 🛠️ Tech stack
 
 - **Markup / styling:** HTML5, CSS3 (custom properties, flex / grid layout)
-- **Behavior:** Vanilla JavaScript (i18n switch, lightbox, brief builder, scroll reveals)
-- **Fonts:** Inter (Google Fonts)
+- **Behavior:** Vanilla JavaScript (i18n switch, lightbox, brief builder, scroll reveals, a swarm of agent cursors that places and straightens selected pieces, and ASCII art generated at runtime: the portrait, the footer name and the space background)
+- **Fonts:** Archivo and Martian Mono (Google Fonts)
 - **Icons:** Simple Icons / Shields.io
 - **Hosting:** GitHub Pages
 
