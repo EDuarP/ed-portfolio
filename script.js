@@ -17,6 +17,7 @@
       'meta.description': 'Eduardo Duarte — AI Systems Engineer y desarrollador full-stack en Medellín. Construyo plataformas web, apps móviles, IoT e IA aplicada para tu negocio.',
 
       'ui.skip': 'Saltar al contenido',
+      'footer.marquee': 'Disponible para proyectos freelance · Trabajo remoto · IA, web, apps e IoT · ',
       'ui.newTab': '(abre en otra pestaña)',
       'ui.enlarge': '(ampliar imagen)',
       'ui.gallery': '(abrir galería de 3 imágenes)',
@@ -215,6 +216,7 @@
       'meta.description': 'Eduardo Duarte — AI Systems Engineer and full-stack developer in Medellín. I build web platforms, mobile apps, IoT and applied AI for your business.',
 
       'ui.skip': 'Skip to content',
+      'footer.marquee': 'Available for freelance projects · Working remotely · AI, web, apps & IoT · ',
       'ui.newTab': '(opens in a new tab)',
       'ui.enlarge': '(enlarge image)',
       'ui.gallery': '(open a gallery of 3 images)',
@@ -749,8 +751,8 @@
     if (!document.fonts || !document.fonts.load) return { soon: done, all: done };
     var all = Promise.all([
       document.fonts.ready,
-      document.fonts.load('600 12px "Martian Mono"'),
-      document.fonts.load('800 12px Archivo')
+      document.fonts.load('600 12px "JetBrains Mono"'),
+      document.fonts.load('400 100px "Instrument Serif"')
     ]).catch(function () { /* offline: fall back to system fonts */ });
     // Never hold the page for a slow font: carry on after 900 ms and redraw when it lands.
     var soon = Promise.race([all, new Promise(function (resolve) { window.setTimeout(resolve, 900); })]);
@@ -898,7 +900,7 @@
       if (W < 120) return;
       var stacked = window.matchMedia('(max-width: 640px)').matches;
       var words = Array.prototype.map.call(footerName.querySelectorAll('.line'), function (el) {
-        return el.textContent.toUpperCase();
+        return el.textContent.trim();
       });
       if (!words.length) return;
       if (!stacked) words = [words.join(' ')];
@@ -908,11 +910,10 @@
       size = W / (widest * ratio);
 
       var measure = canvasFor(1, 1);
-      var font = '800 100px Archivo, system-ui, sans-serif';
+      var font = '400 100px "Instrument Serif", Georgia, serif';
       var setFont = function (ctx) {
         ctx.font = font;
-        if ('fontStretch' in ctx) ctx.fontStretch = 'expanded';
-        if ('letterSpacing' in ctx) ctx.letterSpacing = '-2px';
+        if ('letterSpacing' in ctx) ctx.letterSpacing = '-1px';
       };
       setFont(measure);
       var boxes = words.map(function (word) {
@@ -1107,7 +1108,7 @@
     var FLY_X = 'cubic-bezier(0.16, 1, 0.3, 1)';
     var FLY_Y = 'cubic-bezier(0.4, 0, 0.2, 1)'; // a different curve per axis bends the path
     var ARROW = '<svg viewBox="0 0 18 18" aria-hidden="true" focusable="false">' +
-      '<path d="M1.5 1.5l4.9 14.2 2.3-6.3 6.3-2.3z" fill="currentColor" stroke="#0B0D10" stroke-linejoin="round"/></svg>';
+      '<path d="M1.5 1.5l4.9 14.2 2.3-6.3 6.3-2.3z" fill="currentColor" stroke="#0A0A0A" stroke-linejoin="round"/></svg>';
 
     var layer = document.createElement('div');
     layer.className = 'swarm';
@@ -1513,31 +1514,67 @@
       return lines.join('\n');
     }
 
-    // A black hole: an empty horizon, a bright photon ring, the lensed halo above
-    // and below it, and a flattened accretion disk crossing in front. `phase` turns the disk.
+    // Cell hash: the same speck lands in the same cell on every frame.
+    function hash(a, b, s) {
+      var h = Math.imul(a | 0, 0x27d4eb2d) ^ Math.imul(b | 0, 0x165667b1) ^ Math.imul(s | 0, 0x9e3779b1);
+      h = Math.imul(h ^ (h >>> 15), 0x85ebca6b);
+      h = Math.imul(h ^ (h >>> 13), 0xc2b2ae35);
+      return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+    }
+
+    // A black hole drawn as a tilted whirlpool of strokes: an empty core ringed by a
+    // dense band of swirling lines that thin out into loose dashes and specks.
+    // Every glyph follows the direction of the swirl. `phase` spins it, inner lanes faster.
     function hole(cols, rows, phase) {
-      var R = rows * 0.15;      // horizon radius, in rows
-      var FLAT = 6.5;           // how edge-on the disk is seen
+      var ASPECT = 0.6;     // a character cell is ~0.6 as wide as it is tall
+      var TILT = -0.36;     // the disk leans up to the right
+      var FLAT = 0.54;      // how edge-on the disk is seen
+      var CORE = 0.22;      // the empty centre, in disk radii
+      var RIM = 1.05;       // the swirl fades out here
+      var LANES = 44;       // concentric lanes the strokes run along
+      var cos = Math.cos(TILT), sin = Math.sin(TILT);
+      var half = cols * ASPECT / 2 / 1.1;
       var lines = [];
       for (var r = 0; r < rows; r++) {
         var line = '';
         for (var c = 0; c < cols; c++) {
-          var x = (c - (cols - 1) / 2) * 0.5; // a cell is about half as wide as it is tall
-          var y = r - (rows - 1) / 2;
-          var dist = Math.sqrt(x * x + y * y);
-          var ring = Math.exp(-Math.pow((dist - R * 1.26) / (R * 0.14), 2));
-          var halo = 0.6 * Math.exp(-Math.pow((dist - R * 1.85) / (R * 0.28), 2));
-          var d = Math.sqrt(x * x + y * y * FLAT * FLAT);
-          var disk = 0;
-          if (d > R * 1.45 && d < R * 5.2) {
-            var fall = 1 - (d - R * 1.45) / (R * 3.75);
-            var turn = Math.atan2(y * FLAT, x);
-            var arms = 0.58 + 0.3 * Math.sin(3 * turn + d * 0.85 - phase) + 0.12 * Math.sin(7 * turn - d * 1.7 + phase * 1.6);
-            disk = Math.pow(fall, 0.75) * arms;
+          var u = (c - (cols - 1) / 2) * ASPECT / half;
+          var v = (r - (rows - 1) / 2) / half;
+          var xr = u * cos + v * sin, yr = -u * sin + v * cos;
+          var dx = xr + 0.04, dy = yr / FLAT + 0.05; // the hole sits a little off-centre
+          var rho = Math.sqrt(dx * dx + dy * dy);
+          var speck = hash(c, r, 7);
+          if (rho < CORE * (0.94 + 0.12 * speck)) { line += ' '; continue; }
+          if (rho > RIM) {
+            line += speck < 0.016 * Math.min(1, (rho - RIM) * 3 + 0.4) ? (speck < 0.0012 ? 'o' : '.') : ' ';
+            continue;
           }
-          var behind = dist < R && y < R * 0.08; // the far side of the disk is hidden by the horizon
-          var value = behind ? 0 : Math.max(disk, dist < R ? 0 : Math.max(ring, halo));
-          line += value < 0.07 ? ' ' : tone(TONES, value);
+          var theta = Math.atan2(dy, dx);
+          var t = (rho - CORE) / (RIM - CORE);                    // 0 at the core, 1 at the rim
+          var spin = theta - phase * 0.22 / (0.3 + 1.6 * t);      // inner lanes turn faster
+          var turn = ((spin / (2 * Math.PI)) % 1 + 1) % 1;
+          var lane = Math.floor(t * LANES + turn);                // one lane per turn: a gentle spiral
+          var segs = Math.round(5 + 34 * t);                      // long strokes inside, short dashes outside
+          var seg = Math.floor(turn * segs + hash(lane, 1, 3) * segs);
+          var side = 0.85 + 0.25 * Math.cos(theta + 2.3);         // fuller on the lower left
+          var density = t < 0.12 ? 1 : (0.1 + 0.95 * Math.exp(-(t - 0.12) * 2.6)) * side;
+          if (hash(lane, seg, 11) >= density) {
+            line += speck < 0.03 * t ? '.' : ' ';
+            continue;
+          }
+          // Direction of the swirl on screen at this point picks the glyph.
+          var tx = -Math.sin(theta) - 0.08 * Math.cos(theta);
+          var ty = (Math.cos(theta) - 0.08 * Math.sin(theta)) * FLAT;
+          var sx = tx * cos - ty * sin, sy = tx * sin + ty * cos;
+          var a = Math.atan2(-sy, sx);
+          if (a < 0) a += Math.PI;
+          var heavy = t < 0.28;
+          var g;
+          if (a < 0.4 || a > Math.PI - 0.4) g = heavy ? (speck < 0.55 ? '=' : '-') : (speck < 0.8 ? '-' : '~');
+          else if (a < 1.18) g = '/';
+          else if (a < 1.96) g = heavy ? '|' : (speck < 0.5 ? '|' : ':');
+          else g = '\\';
+          line += g;
         }
         lines.push(line);
       }
@@ -1638,7 +1675,7 @@
     window.addEventListener('resize', relayout);
     if ('ResizeObserver' in window) new ResizeObserver(relayout).observe(document.querySelector('main'));
 
-    // The accretion disks turn, but only while a black hole is on screen.
+    // The whirlpools turn, but only while a black hole is on screen.
     if (!('IntersectionObserver' in window)) return;
     var live = [];
     var timer = 0;
@@ -1677,7 +1714,7 @@
     if (!canvas || !canvas.getContext) return;
     var ctx = canvas.getContext('2d');
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var BLUE = '91, 134, 240';
+    var INK = '255, 255, 255';
     var GRID = 24;
     var w = 0, h = 0, dpr = 1, fieldH = 0, nodes = [], pulses = [], grid = null;
     // The dot grid is drawn on its own layer and masked by soft drifting "clouds",
@@ -1702,7 +1739,7 @@
       var tile = document.createElement('canvas');
       tile.width = tile.height = Math.round(GRID * dpr);
       var t = tile.getContext('2d');
-      t.fillStyle = 'rgba(' + BLUE + ', 0.11)';
+      t.fillStyle = 'rgba(' + INK + ', 0.06)';
       t.beginPath();
       t.arc(tile.width / 2, tile.height / 2, 0.9 * dpr, 0, Math.PI * 2);
       t.fill();
@@ -1796,8 +1833,8 @@
           var dx = pts[a].x - pts[b].x, dy = pts[a].y - pts[b].y;
           var d = Math.sqrt(dx * dx + dy * dy);
           if (d < linkDist) {
-            var alpha = (1 - d / linkDist) * (0.12 + 0.14 * p);
-            ctx.strokeStyle = 'rgba(' + BLUE + ', ' + alpha.toFixed(3) + ')';
+            var alpha = (1 - d / linkDist) * (0.06 + 0.07 * p);
+            ctx.strokeStyle = 'rgba(' + INK + ', ' + alpha.toFixed(3) + ')';
             ctx.beginPath();
             ctx.moveTo(pts[a].x, pts[a].y);
             ctx.lineTo(pts[b].x, pts[b].y);
@@ -1809,7 +1846,7 @@
 
       // Nodes
       for (var k = 0; k < pts.length; k++) {
-        ctx.fillStyle = 'rgba(' + BLUE + ', ' + (0.22 + 0.2 * p).toFixed(3) + ')';
+        ctx.fillStyle = 'rgba(' + INK + ', ' + (0.12 + 0.1 * p).toFixed(3) + ')';
         ctx.beginPath();
         ctx.arc(pts[k].x, pts[k].y, pts[k].r, 0, Math.PI * 2);
         ctx.fill();
@@ -1828,7 +1865,7 @@
           var ay = screenY(s.a, offset), by = screenY(s.b, offset);
           if (Math.abs(ay - by) > linkDist * 1.5) { pulses.splice(q, 1); continue; }
           var px = s.a.x + (s.b.x - s.a.x) * s.t, py = ay + (by - ay) * s.t;
-          ctx.fillStyle = 'rgba(' + BLUE + ', 0.55)';
+          ctx.fillStyle = 'rgba(' + INK + ', 0.4)';
           ctx.beginPath();
           ctx.arc(px, py, 1.8, 0, Math.PI * 2);
           ctx.fill();
@@ -1883,7 +1920,7 @@
         '| |___| |_| |   ' + EMAIL,
         '|_____|____/'
       ].join('\n'),
-      'font-family: ui-monospace, Consolas, Menlo, monospace; color: #5B86F0'
+      'font-family: ui-monospace, Consolas, Menlo, monospace; color: #F5F5F4'
     );
   }
 })();

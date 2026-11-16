@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="https://eduarp.github.io/ed-portfolio/"><strong>🌐 Live site</strong></a>
+  <a href="https://eduarp.vercel.app/"><strong>🌐 Live site</strong></a>
   ·
   <a href="./Eduardo_Duarte_CV.pdf"><strong>📄 Download CV</strong></a>
 </p>
@@ -14,7 +14,7 @@
   <img alt="HTML5" src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white">
   <img alt="CSS3" src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white">
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black">
-  <img alt="GitHub Pages" src="https://img.shields.io/badge/GitHub%20Pages-222?style=flat&logo=githubpages&logoColor=white">
+  <img alt="Vercel" src="https://img.shields.io/badge/Vercel-000?style=flat&logo=vercel&logoColor=white">
   <img alt="i18n" src="https://img.shields.io/badge/i18n-EN%20%2F%20ES-2ea44f?style=flat">
 </p>
 
@@ -24,7 +24,7 @@
 
 A fast, dependency-free single-page portfolio that presents Eduardo Duarte's profile, featured
 projects, technical skills and CV. Built with plain HTML, CSS and vanilla JavaScript — no
-frameworks, no build step — and deployed on GitHub Pages.
+frameworks, no build step — and deployed on Vercel.
 
 The site is being redesigned around a **dark bento layout** with a futuristic **"HUD" bracket style**,
 fully bilingual (ES / EN) and focused on **freelance clients**. Featured projects are
@@ -68,9 +68,9 @@ The site targets an audience in both English and Spanish and focuses on:
 
 - **Markup / styling:** HTML5, CSS3 (custom properties, flex / grid layout)
 - **Behavior:** Vanilla JavaScript (i18n switch, lightbox, brief builder, scroll reveals, a swarm of agent cursors that places and straightens selected pieces, and ASCII art generated at runtime: the portrait, the footer name and the space background)
-- **Fonts:** Archivo and Martian Mono (Google Fonts)
+- **Fonts:** Instrument Serif, Inter and JetBrains Mono (Google Fonts)
 - **Icons:** Simple Icons / Shields.io
-- **Hosting:** GitHub Pages
+- **Hosting:** Vercel (auto-deploys from `main`)
 
 ## 📁 Project structure
 

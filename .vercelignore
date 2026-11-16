@@ -1,0 +1,5 @@
+# Not part of the site
+.env*
+.vercel
+cv/
+README.md
