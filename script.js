@@ -1073,6 +1073,11 @@
     // The observers ignore the bottom edge of the viewport, so the last items of the
     // page would never qualify: at the end of the document, take whatever is on screen.
     function atEnd() {
+      // A fast scroll can jump clean over a piece without it ever intersecting:
+      // anything left above the viewport settles on its own so the build can finish.
+      pieces.forEach(function (piece) {
+        if (!piece.done && !piece.queued && piece.el.getBoundingClientRect().bottom < 0) settle(piece);
+      });
       var doc = document.documentElement;
       if (window.innerHeight + window.scrollY < doc.scrollHeight - 2) return;
       var onScreen = function (el) {
@@ -1101,7 +1106,7 @@
 
     if (!animated) return api; // pieces settle the moment they scroll in
 
-    var POOL = small ? 3 : 5;
+    var POOL = small ? 4 : 8;
     var STAGGER = 60;        // ms between two cursors setting off
     var MAX_WAIT = 900;      // a queued piece never waits longer than this for a cursor
     var METER = 12;          // cells in the ASCII progress meter
@@ -1120,7 +1125,11 @@
       cursor.style.setProperty('--c', 'var(--agent-' + (i + 1) + ')');
       cursor.innerHTML = '<div>' + ARROW + '</div>';
       layer.appendChild(cursor);
-      agents.push({ el: cursor, inner: cursor.firstChild, x: 0, y: 0, on: false, busy: false, idle: 0 });
+      agents.push({
+        el: cursor, inner: cursor.firstChild, x: 0, y: 0, on: false, busy: false, idle: 0, follow: false,
+        // Where this cursor likes to hover around the pointer once it has nothing to build.
+        slot: { angle: (i / POOL) * Math.PI * 2 + 0.4, radius: 34 + (i % 3) * 14, ease: 0.06 + (i % 4) * 0.025 }
+      });
     }
     document.body.appendChild(layer);
 
@@ -1153,6 +1162,10 @@
       if (stopped) return;
       var working = active > 0 || queue.length > 0;
       var finished = built >= total;
+      if (finished && canFollow && !crew) {
+        crew = true;
+        follow();
+      }
       var cells = Math.round((built / total) * METER);
       layersEl.textContent = fill(t('hud.layers'), { built: built, total: total });
       onEl.textContent = repeat('#', cells);
@@ -1325,13 +1338,66 @@
       });
     }
 
+    // With a mouse, a cursor that runs out of work tags along with the pointer instead of leaving.
+    // Touch screens have no pointer to follow, so there the cursor fades out as before.
+    var canFollow = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var pointer = null;   // last mouse position, in viewport coordinates
+    var crew = false;     // the build is over: every cursor joins the pointer
+    var followRaf = 0;
+    var lastTick = 0;
+
+    function follow() {
+      if (followRaf || !pointer || stopped) return;
+      lastTick = 0;
+      followRaf = window.requestAnimationFrame(tick);
+    }
+
+    function tick(now) {
+      followRaf = 0;
+      if (stopped || !pointer) return;
+      var dt = lastTick ? Math.min(now - lastTick, 64) : 16.7;
+      lastTick = now;
+      var px = pointer.x + window.scrollX, py = pointer.y + window.scrollY;
+      agents.forEach(function (a, i) {
+        if (a.busy) return;
+        if (!a.follow) {
+          if (!crew || a.on) return;
+          // A cursor that never got a job walks in from the nearest side.
+          place(a, pointer.x < window.innerWidth / 2 ? -28 : window.innerWidth + 28, py + (Math.random() - 0.5) * 160);
+          a.on = true;
+          a.follow = true;
+          a.el.classList.add('is-on');
+        }
+        var s = a.slot;
+        // A slow orbit keeps the group alive while the mouse rests.
+        var ang = s.angle + (now / 4000) * (i % 2 ? 1 : -1);
+        var tx = px + Math.cos(ang) * s.radius, ty = py + Math.sin(ang) * s.radius;
+        var k = 1 - Math.pow(1 - s.ease, dt / 16.7);
+        place(a, a.x + (tx - a.x) * k, a.y + (ty - a.y) * k);
+      });
+      followRaf = window.requestAnimationFrame(tick);
+    }
+
+    if (canFollow) {
+      window.addEventListener('pointermove', function (e) {
+        if (e.pointerType && e.pointerType !== 'mouse') return;
+        pointer = { x: e.clientX, y: e.clientY };
+        follow();
+      }, { passive: true });
+    }
+
     function release(a) {
       a.busy = false;
       active--;
-      a.idle = window.setTimeout(function () {
-        a.on = false;
-        a.el.classList.remove('is-on');
-      }, 800);
+      if (canFollow) {
+        a.follow = true;
+        follow();
+      } else {
+        a.idle = window.setTimeout(function () {
+          a.on = false;
+          a.el.classList.remove('is-on');
+        }, 800);
+      }
       refresh();
       pump();
     }
